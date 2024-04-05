@@ -21,17 +21,19 @@ connection.connect((err)=> {
     console.log("EROR: " + err)
 })
 app.post('/api/signin', (request, response) => {
-    const {lat , lng} = request.body
+    const {firstname, lastname, username, password} = request.body
 
     const data = {
-        latitude : lat,
-        longitude : lng
+        firstname   : firstname,
+        lastname    : lastname,
+        username    : username,
+        password    : password
     }
 
-    connection.query('INSERT INTO api SET ?', data, (err, result) => {
+    connection.query('INSERT INTO client_data SET ?', data, (err, result) => {
         if(err) throw err
         console.log("saved")
-        response.sed("Naka save na ang coordinates")
+        response.sed("Data mo ay naka save na")
     })
 
 })
