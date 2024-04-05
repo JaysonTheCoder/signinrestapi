@@ -20,9 +20,8 @@ connection.connect((err)=> {
 
     console.log("EROR: " + err)
 })
-app.post('/api/signin', (request, response) => {
+app.post('/signin', (request, response) => {
     const {firstname, lastname, username, password} = request.body
-
     const data = {
         firstname   : firstname,
         lastname    : lastname,
@@ -33,7 +32,7 @@ app.post('/api/signin', (request, response) => {
     connection.query('INSERT INTO client_data SET ?', data, (err, result) => {
         if(err) throw err
         console.log("saved")
-        response.sed("Data mo ay naka save na")
+        response.send("Data mo ay naka save na")
     })
 
 })
