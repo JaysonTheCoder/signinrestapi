@@ -28,6 +28,11 @@ app.post('/api/signin', (request, response) => {
         longitude : lng
     }
 
+    connection.query('INSERT INTO api SET ?', data, (err, result) => {
+        if(err) throw err
+        console.log("saved")
+        response.sed("Naka save na ang coordinates")
+    })
 
 })
 app.listen(port, function() {
