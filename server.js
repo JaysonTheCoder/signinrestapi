@@ -3,32 +3,46 @@ const app = express()
 const mysql = require("mysql")
 const cors = require("cors")
 const port = process.env.PORT||10500
-app.use(express.json())
+
+
 app.use(cors())
+app.use(express.json())
+
+
+
+// const connection = mysql.createConnection({
+//     host    : 'sql6.freesqldatabase.com',
+//     user    : 'sql6695400',
+//     password: 'U9Bwq5aM2T',
+//     database: 'sql6695400'
+// })
 
 const connection = mysql.createConnection({
-    host    : 'sql6.freesqldatabase.com',
-    user    : 'sql6695400',
+    host : 'sql6.freesqldatabase.com',
+    user : 'sql6695400',
     password: 'U9Bwq5aM2T',
-    database: 'sql6695400'
+    database : 'sql6695400'
 })
-
 connection.connect((err)=> {
-    if(err) throw err
-
-    console.log("EROR: " + err)
+    if(err) {
+        console.log(err)
+        return
+    }
+    console.log("Connected")
 })
 app.post('/signin', (request, response) => {
-    const {firstname, lastname, username, password} = request.body
+    const body = request.body
     const data = {
-        firstname   : firstname,
-        lastname    : lastname,
-        username    : username,
-        password    : password
+        firstname   : body.firstname,
+        lastname    :  body.lastname,
+        username    :  body.username,
+        password    :  body.password
     }
 
-    connection.query('INSERT INTO client_data SET ?', data, (err, result) => {
-        if(err) throw err
+    connection.query('INSERT INTO client_data SET ?', body, (err, result) => {
+        if(err) {
+            response.json({hasError: true, errMessage: err.errno})
+        }
         console.log("saved")
         response.send("Data mo ay naka save na")
     })
