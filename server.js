@@ -38,14 +38,22 @@ app.post('/signin', (request, response) => {
         username    :  body.username,
         password    :  body.password
     }
-
-    connection.query('INSERT INTO client_data SET ?', body, (err, result) => {
-        if(err) {
-            response.json({hasError: true, errMessage: err.errno})
-        }
-        console.log("saved")
-        response.send("Data mo ay naka save na")
-    })
+    const loc = []
+    if(body.onLocation) {
+        loc.push({
+            lat : body.latitude,
+            lng : body.longitude
+        })
+        response.json(loc)
+    }else if(body.onSignin){
+        connection.query('INSERT INTO client_data SET ?', body, (err, result) => {
+            if(err) {
+                response.json({hasError: true, errMessage: err.errno})
+            }
+            console.log("saved")
+            response.send("Data mo ay naka save na")
+        })
+    }
 
 })
 app.listen(port, function() {
