@@ -51,7 +51,7 @@ app.post('/signin', (request, response) => {
                 response.json({hasError: true, errMessage: err.errno})
             }
             console.log("saved")
-            response.send("Data mo ay naka save na")
+            response.send(body)
         })
     }
 
